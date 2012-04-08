@@ -14,7 +14,7 @@ import java.util.Iterator;
  * The TextGame (View) class queries Map for information on the state of the environment.
  *
  */
-public class Map {
+class Map {
 
 	// x and y store location of player
 	// x is first index of array (locations[x][y])
@@ -44,7 +44,7 @@ public class Map {
 	/**
 	 * Default constructor with hardcoded map used as an example.
 	 */
-	public Map() {
+	Map() {
 		
 		x = 2;
 		y = 2;
