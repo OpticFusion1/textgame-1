@@ -2,7 +2,6 @@ package bli.example.textgame;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 
 /**
  * 
@@ -219,9 +218,9 @@ class Map {
 	 * 
 	 * Called by TextGame class to get the player's inventory.
 	 */
-	Iterator<String> getInventory(){
+	HashSet<String> getInventory(){
 		
-		return inventory.iterator();
+		return inventory;
 		
 	}
 	
@@ -232,12 +231,12 @@ class Map {
 	 * 
 	 * Called by TextGame class to get a list of items that are on the ground.
 	 */
-	Iterator<String> getGroundItems(){
+	HashSet<String> getGroundItems(){
 		
 		MapLocation current = getLocationCache();
 		if(items.containsKey(current)){
 			
-			return items.get(current).iterator();
+			return items.get(current);
 			
 		}
 		else{

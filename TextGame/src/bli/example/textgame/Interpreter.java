@@ -102,8 +102,8 @@ class Interpreter {
 		}
 		else if(cmd.hasNext("^quit|exit$")){
 			
-			//TODO
-			return "";
+			TextGame.quit();
+			return "Exiting...";
 			
 		}
 		else if(cmd.hasNext()){
