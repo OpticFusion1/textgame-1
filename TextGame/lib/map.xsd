@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="bli.example.textgame.map" xmlns:tns="bli.example.textgame.map" elementFormDefault="qualified">
+
+    <element name="map" type="tns:mapType"></element>
+
+
+
+
+    <complexType name="mapType">
+    	<sequence>
+            <element ref="tns:start"></element>
+            <element ref="tns:inventory"></element>
+            <element ref="tns:location" maxOccurs="unbounded"></element>
+    	</sequence>
+    	<attribute name="height" use="required">
+    		<simpleType>
+    			<restriction base="int">
+    				<minInclusive value="1"></minInclusive>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="width" use="required">
+    		<simpleType>
+    			<restriction base="int">
+    				<minInclusive value="1"></minInclusive>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    </complexType>
+
+    <complexType name="locationType">
+    	<sequence>
+    		<element ref="tns:item" minOccurs="0" maxOccurs="unbounded">
+    			<simpleType>
+    				<restriction base="string">
+    					<minLength value="1"></minLength>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    	</sequence>
+    	<attribute name="x" use="required">
+    		<simpleType>
+    			<restriction base="int">
+    				<minInclusive value="0"></minInclusive>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="y" use="required">
+    		<simpleType>
+    			<restriction base="int">
+    				<minInclusive value="0"></minInclusive>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    </complexType>
+    
+    <complexType name="startType">
+    	<attribute name="x" use="required">
+    		<simpleType>
+    			<restriction base="int">
+    				<minInclusive value="0"></minInclusive>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    	<attribute name="y" use="required">
+    		<simpleType>
+    			<restriction base="int">
+    				<minInclusive value="0"></minInclusive>
+    			</restriction>
+    		</simpleType>
+    	</attribute>
+    </complexType>
+
+
+    <complexType name="inventoryType">
+    	<sequence>
+    		<element ref="tns:item" minOccurs="0"
+    			maxOccurs="unbounded">
+    			<simpleType>
+    				<restriction base="string">
+    					<minLength value="1"></minLength>
+    				</restriction>
+    			</simpleType>
+    		</element>
+    	</sequence>
+    </complexType>
+    
+
+    <element name="item" type="tns:itemType">
+    </element>
+    
+
+
+
+    <simpleType name="itemType">
+    	<restriction base="string">
+    		<minLength value="1"></minLength>
+    	</restriction>
+    </simpleType>
+
+    <element name="location" type="tns:locationType"></element>
+
+    <element name="start" type="tns:startType"></element>
+
+    <element name="inventory" type="tns:inventoryType"></element>
+</schema>

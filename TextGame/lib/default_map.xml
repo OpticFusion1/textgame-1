@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Plus sign shaped 5x5 map with a few items scattered about.
      Same map as the one created by the default constructor for Map. -->
-<map height="5" width="5">
+<map height="5" width="5" xmlns="bli.example.textgame.map" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="bli.example.textgame.map map.xsd">
+	<start x="2" y="2" />
+	<inventory>
+		<item>transponder</item>
+	</inventory>
 	<location x="2" y="4">
-		<item name="north_flag" />
+		<item>north_flag</item>
 	</location>
 	<location x="2" y="3" />
 	<location x="2" y="2" />
@@ -13,11 +18,7 @@
 	<location x="4" y="2" />
 	<location x="2" y="1" />
 	<location x="2" y="0">
-		<item name="south_flag" />
-		<item name="compass" />
+		<item>south_flag</item>
+		<item>compass</item>
 	</location>
-	<start x="2" y="2" />
-	<inventory>
-		<item name="transponder" />
-	</inventory>
 </map>
