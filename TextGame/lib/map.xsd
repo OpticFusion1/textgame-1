@@ -30,13 +30,7 @@
 
     <complexType name="locationType">
     	<sequence>
-    		<element ref="tns:item" minOccurs="0" maxOccurs="unbounded">
-    			<simpleType>
-    				<restriction base="string">
-    					<minLength value="1"></minLength>
-    				</restriction>
-    			</simpleType>
-    		</element>
+    		<element name="item" type="tns:itemType" minOccurs="0" maxOccurs="unbounded"></element>
     	</sequence>
     	<attribute name="x" use="required">
     		<simpleType>
@@ -74,14 +68,7 @@
 
     <complexType name="inventoryType">
     	<sequence>
-    		<element ref="tns:item" minOccurs="0"
-    			maxOccurs="unbounded">
-    			<simpleType>
-    				<restriction base="string">
-    					<minLength value="1"></minLength>
-    				</restriction>
-    			</simpleType>
-    		</element>
+    		<element name="item" type="tns:itemType" minOccurs="0" maxOccurs="unbounded"></element>
     	</sequence>
     </complexType>
     
