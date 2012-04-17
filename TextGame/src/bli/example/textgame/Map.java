@@ -31,6 +31,9 @@ class Map {
 	// true means location exists, false means it does not
 	private final boolean[][] locations;
 	
+	// Item names cannot contain whitespace.
+	// There should not be more than one item with the same name on a map.
+	
 	// collection of items on the map
 	// each location with an item is a key in the HashMap
 	// each location can have multiple items, which are contained
@@ -59,10 +62,10 @@ class Map {
 		
 		items = new HashMap<MapLocation, HashSet<String>>();
 		HashSet<String> northSquare = new HashSet<String>();
-		northSquare.add("north flag");
+		northSquare.add("north_flag");
 		items.put(new MapLocation(2,4), northSquare);
 		HashSet<String> southSquare = new HashSet<String>();
-		southSquare.add("south flag");
+		southSquare.add("south_flag");
 		southSquare.add("compass");
 		items.put(new MapLocation(2,0), southSquare);
 		
@@ -108,22 +111,22 @@ class Map {
 		switch(d){
 		
 			case NORTH:
-				if(result = locations[x][y+1]){
+				if(result = y + 1 < locations[x].length && locations[x][y+1]){
 					y++;
 				}
 				break;
 			case SOUTH:
-				if(result = locations[x][y-1]){
+				if(result = y > 0 && locations[x][y-1]){
 					y--;					
 				}
 				break;
 			case EAST:
-				if(result = locations[x+1][y]){
+				if(result = x + 1 < locations.length && locations[x+1][y]){
 					x++;
 				}
 				break;
 			case WEST:
-				if(result = locations[x-1][y]){
+				if(result = x > 0 && locations[x-1][y]){
 					x--;
 				}
 				break;
@@ -155,7 +158,7 @@ class Map {
 				
 			}
 
-			return items.get(current).add(item);
+			return inventory.remove(item) && items.get(current).add(item);
 			
 		}
 		else{

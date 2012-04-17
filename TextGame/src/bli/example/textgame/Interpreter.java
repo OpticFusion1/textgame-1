@@ -23,20 +23,20 @@ class Interpreter {
 	
 	String interpretCmd(Scanner cmd){
 		
-		if(cmd.hasNext("^move$")){
+		if(cmd.hasNext("move")){
 			
 			cmd.next();
 			Map.Direction dir = null;
-			if(cmd.hasNext("^north$")){
+			if(cmd.hasNext("north")){
 				dir = Map.Direction.NORTH;
 			}
-			else if(cmd.hasNext("^south$")){
+			else if(cmd.hasNext("south")){
 				dir = Map.Direction.SOUTH;
 			}
-			else if(cmd.hasNext("^east$")){
+			else if(cmd.hasNext("east")){
 				dir = Map.Direction.EAST;
 			}
-			else if(cmd.hasNext("^west$")){
+			else if(cmd.hasNext("west")){
 				dir = Map.Direction.WEST;
 			}
 			
@@ -62,7 +62,7 @@ class Interpreter {
 			}
 			
 		}
-		else if(cmd.hasNext("^take$")){
+		else if(cmd.hasNext("take")){
 			
 			cmd.next();
 			if(cmd.hasNext()){
@@ -78,7 +78,7 @@ class Interpreter {
 			}
 			
 		}
-		else if(cmd.hasNext("^put$")){
+		else if(cmd.hasNext("put")){
 			
 			cmd.next();
 			if(cmd.hasNext()){
@@ -94,13 +94,13 @@ class Interpreter {
 			}
 			
 		}
-		else if(cmd.hasNext("^look$")){
+		else if(cmd.hasNext("look")){
 			
 			TextGame.look();
 			return "Looking at player's current status...";
 			
 		}
-		else if(cmd.hasNext("^quit|exit$")){
+		else if(cmd.hasNext("quit|exit")){
 			
 			TextGame.quit();
 			return "Exiting...";

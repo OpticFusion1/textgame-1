@@ -71,7 +71,7 @@ public class TextGame {
 		}
 		
 		HashSet<String> floorItems = map.getGroundItems();
-		if(floorItems.size() > 0){
+		if(floorItems != null && floorItems.size() > 0){
 			
 			System.out.print("Floor contains: ");
 			for(String item : floorItems){
