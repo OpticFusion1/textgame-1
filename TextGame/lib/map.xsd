@@ -30,7 +30,7 @@
 
     <complexType name="locationType">
     	<sequence>
-    		<element name="item" type="tns:itemType" minOccurs="0" maxOccurs="unbounded"></element>
+    		<element ref="tns:item" minOccurs="0" maxOccurs="unbounded"></element>
     	</sequence>
     	<attribute name="x" use="required">
     		<simpleType>
@@ -68,7 +68,7 @@
 
     <complexType name="inventoryType">
     	<sequence>
-    		<element name="item" type="tns:itemType" minOccurs="0" maxOccurs="unbounded"></element>
+    		<element ref="tns:item" minOccurs="0" maxOccurs="unbounded"></element>
     	</sequence>
     </complexType>
     
@@ -90,4 +90,6 @@
     <element name="start" type="tns:startType"></element>
 
     <element name="inventory" type="tns:inventoryType"></element>
+
+
 </schema>
