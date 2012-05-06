@@ -2,6 +2,14 @@ package bli.example.textgame;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.io.File;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.DocumentBuilder;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 /**
  * 
@@ -71,6 +79,81 @@ class Map {
 		
 		inventory = new HashSet<String>();
 		inventory.add("transponder");
+		
+	}
+	
+	/**
+	 * 
+	 * Creates a Map instance based on the contents of an XML file.
+	 * 
+	 * @param xmlFile File object representing XML file of map to load.
+	 */
+	Map(File xmlFile) throws Exception{
+		
+		// TODO validate XML file against schema first
+		// throw exception if invalid
+		
+		// No way to recover for exceptions loading the parser or file.
+		// Exceptions will be thrown up the chain.
+		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+		Document doc = dBuilder.parse(xmlFile);
+		
+		Element root = doc.getDocumentElement();
+		
+		// create locations 2d array with proper dimensions
+		int width = Integer.parseInt(root.getAttribute("width"));
+		int height = Integer.parseInt(root.getAttribute("height"));
+		locations = new boolean[width][];
+		for(int i=0;i<width;i++){
+			
+			locations[i] = new boolean[height];
+			
+		}
+		
+		// initialize starting location
+		Element startElement = (Element) root.getFirstChild();
+		x = Integer.parseInt(startElement.getAttribute("x"));
+		y = Integer.parseInt(startElement.getAttribute("y"));
+		
+		// initialize inventory
+		Element inventoryElement = (Element) startElement.getNextSibling();
+		NodeList inventoryItemNodes = inventoryElement.getChildNodes();
+		inventory = new HashSet<String>();
+		for(int i=0;i<inventoryItemNodes.getLength();i++){
+			
+			inventory.add(((Element) inventoryItemNodes.item(i)).getNodeValue());
+			
+		}
+		
+		// fill in map locations
+		items = new HashMap<MapLocation, HashSet<String>>();
+		Element locationElement = (Element) inventoryElement.getNextSibling();
+		while(locationElement != null){
+			
+			// fill in spot in locations array
+			int locationX = Integer.parseInt(locationElement.getAttribute("x"));
+			int locationY = Integer.parseInt(locationElement.getAttribute("y"));
+			locations[locationX][locationY] = true;
+			
+			// fill items hash with items at the location
+			NodeList locationItemNodes = locationElement.getChildNodes();
+			int numItems = locationItemNodes.getLength();
+			if(numItems > 0){
+				
+				HashSet<String> itemSet = new HashSet<String>();
+				items.put(new MapLocation(locationX,locationY), itemSet);
+				for(int i=0;i<numItems;i++){
+					
+					itemSet.add(((Element) locationItemNodes.item(i)).getNodeValue());
+					
+				}
+				
+			}
+			
+			locationElement = (Element) locationElement.getNextSibling();
+			
+		}
 		
 	}
 	
