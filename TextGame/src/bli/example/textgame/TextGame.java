@@ -1,5 +1,6 @@
 package bli.example.textgame;
 
+import java.io.File;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -26,7 +27,28 @@ public class TextGame {
 	public static void main(String[] args) {
 		
 		System.out.println("Welcome to BLI Text Game version 1.0");
-		map = new Map();
+		
+		if(args.length == 1){
+			
+			try{
+				
+				map = new Map(new File(args[0]));
+			
+			}
+			catch(Exception e){
+				
+				System.err.println("Error generating Map from XML file. Exiting.");
+				System.exit(1);
+				
+			}
+			
+		}
+		else{
+			
+			map = new Map();
+			
+		}
+		
 		Interpreter interpreter = new Interpreter(map);
 		while(!quitting){
 			System.out.println(interpreter.interpretCmd(new Scanner(System.in)));

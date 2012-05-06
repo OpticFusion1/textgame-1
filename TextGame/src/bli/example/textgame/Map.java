@@ -8,7 +8,6 @@ import javax.xml.parsers.DocumentBuilder;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
-import org.w3c.dom.Node;
 import org.w3c.dom.Element;
 
 /**
@@ -52,7 +51,7 @@ class Map {
 	private final HashSet<String> inventory;
 	
 	/**
-	 * Default constructor with hardcoded map used as an example.
+	 * Default constructor with hard coded map used as an example.
 	 */
 	Map() {
 		
@@ -90,12 +89,13 @@ class Map {
 	 */
 	Map(File xmlFile) throws Exception{
 		
-		// TODO validate XML file against schema first
-		// throw exception if invalid
-		
 		// No way to recover for exceptions loading the parser or file.
 		// Exceptions will be thrown up the chain.
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+		dbFactory.setValidating(true);
+		dbFactory.setNamespaceAware(true);
+		dbFactory.setAttribute("http://java.sun.com/xml/jaxp/properties/schemaLanguage", 
+			      "http://www.w3.org/2001/XMLSchema");
 		DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 		Document doc = dBuilder.parse(xmlFile);
 		
