@@ -7,6 +7,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Element;
 
@@ -102,6 +103,7 @@ class Map {
 		Element root = doc.getDocumentElement();
 		
 		// create locations 2d array with proper dimensions
+		// ----------------------------------------------
 		int width = Integer.parseInt(root.getAttribute("width"));
 		int height = Integer.parseInt(root.getAttribute("height"));
 		locations = new boolean[width][];
@@ -110,25 +112,74 @@ class Map {
 			locations[i] = new boolean[height];
 			
 		}
+		//------------------------------------------------
 		
 		// initialize starting location
-		Element startElement = (Element) root.getFirstChild();
-		x = Integer.parseInt(startElement.getAttribute("x"));
-		y = Integer.parseInt(startElement.getAttribute("y"));
-		
-		// initialize inventory
-		Element inventoryElement = (Element) startElement.getNextSibling();
-		NodeList inventoryItemNodes = inventoryElement.getChildNodes();
-		inventory = new HashSet<String>();
-		for(int i=0;i<inventoryItemNodes.getLength();i++){
+		//------------------------------------------------
+		// first child node might be a text node, in which case the Element
+		// we want is the next node
+		Node startNode = root.getFirstChild();
+		Element startElement;
+		if(startNode.getNodeName().equals("#text")){
 			
-			inventory.add(((Element) inventoryItemNodes.item(i)).getNodeValue());
+			startElement = (Element) startNode.getNextSibling();
+			
+		}
+		else{
+			
+			startElement = (Element) startNode;
 			
 		}
 		
+		x = Integer.parseInt(startElement.getAttribute("x"));
+		y = Integer.parseInt(startElement.getAttribute("y"));
+		//------------------------------------------------
+		
+		// initialize inventory
+		//------------------------------------------------
+		Node inventoryNode = startElement.getNextSibling();
+		Element inventoryElement;
+		if(inventoryNode.getNodeName().equals("#text")){
+			
+			inventoryElement = (Element) inventoryNode.getNextSibling();
+			
+		}
+		else{
+			
+			inventoryElement = (Element) inventoryNode;
+			
+		}
+		NodeList inventoryItemNodes = inventoryElement.getChildNodes();
+		inventory = new HashSet<String>();
+		
+		for(int i=0;i<inventoryItemNodes.getLength();i++){
+			
+			Node currentItemNode = inventoryItemNodes.item(i);
+			if(!currentItemNode.getNodeName().equals("#text")){
+				
+				String itemName = ((Element) currentItemNode).getFirstChild().getNodeValue();
+				inventory.add(itemName);
+				
+			}
+			
+		}
+		//------------------------------------------------
+		
 		// fill in map locations
+		//------------------------------------------------
 		items = new HashMap<MapLocation, HashSet<String>>();
-		Element locationElement = (Element) inventoryElement.getNextSibling();
+		Node locationNode = inventoryElement.getNextSibling();
+		Element locationElement;
+		if(locationNode.getNodeName().equals("#text")){
+			
+			locationElement = (Element) locationNode.getNextSibling();
+			
+		}
+		else{
+			
+			locationElement = (Element) locationNode;
+			
+		}
 		while(locationElement != null){
 			
 			// fill in spot in locations array
@@ -143,17 +194,35 @@ class Map {
 				
 				HashSet<String> itemSet = new HashSet<String>();
 				items.put(new MapLocation(locationX,locationY), itemSet);
+				
 				for(int i=0;i<numItems;i++){
 					
-					itemSet.add(((Element) locationItemNodes.item(i)).getNodeValue());
+					Node currentItemNode = locationItemNodes.item(i);
+					if(!currentItemNode.getNodeName().equals("#text")){
+					
+						String itemName = ((Element) currentItemNode).getFirstChild().getNodeValue();
+						itemSet.add(itemName);
+					
+					}
 					
 				}
 				
 			}
 			
-			locationElement = (Element) locationElement.getNextSibling();
+			Node nextLocationNode = locationElement.getNextSibling();
+			if(nextLocationNode.getNodeName().equals("#text")){
+				
+				locationElement = (Element) nextLocationNode.getNextSibling();
+				
+			}
+			else{
+				
+				locationElement = (Element) nextLocationNode;
+				
+			}
 			
 		}
+		//------------------------------------------------
 		
 	}
 	

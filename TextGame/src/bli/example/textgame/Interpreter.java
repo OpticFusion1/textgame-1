@@ -97,7 +97,7 @@ class Interpreter {
 		else if(cmd.hasNext("look")){
 			
 			TextGame.look();
-			return "Looking at player's current status...";
+			return "";
 			
 		}
 		else if(cmd.hasNext("quit|exit")){
