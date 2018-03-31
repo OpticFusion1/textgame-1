@@ -1,4 +1,4 @@
-package bli.example.textgame;
+package name.brookli.textgame;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -15,10 +15,7 @@ import org.w3c.dom.Element;
  * 
  * @author Absreim
  * 
- * Model class of TextGame in Model-View-Controller architecture. Keeps track of
- * state of the environment, processes actions received from the Interpreter (Controller) class,
- * and notifies the Interpreter (Controller) class about the result of an action. 
- * The TextGame (View) class queries Map for information on the state of the environment.
+ * Keeps track of the state of the environment.
  *
  */
 class Map {

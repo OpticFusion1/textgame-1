@@ -1,6 +1,1 @@
-.git/
-.metadata/
-TextGame/.settings/
-TextGame/bin/
-TextGame/.classpath
-TextGame/.project
+/bin/
